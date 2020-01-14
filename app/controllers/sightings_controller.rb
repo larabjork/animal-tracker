@@ -42,6 +42,12 @@ class SightingsController < ApplicationController
     redirect_to animal_path(@sighting.animal)
   end
 
+  def search
+    @animal = Animal.find(params[:animal_id])
+    @sightings = Sighting.where("region ilike ?", "%#{params[:search_string]}%")
+    render :search
+  end
+
   private
   def sighting_params
     params.require(:sighting).permit(:date, :latitude, :longitude, :region)

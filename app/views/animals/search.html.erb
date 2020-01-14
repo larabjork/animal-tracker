@@ -1,0 +1,18 @@
+<%= form_for [@animal, @sightings] do |f| %>
+<%= f.label :date %>
+<%= f.date_field :search_string %>
+<%= f.submit %>
+<% end %>
+
+<% if @sightings.any? %>
+  <h4>Here are the sightings:</h4>
+<ul>
+  <% @sightings.each do |s| %>
+    <li>
+      <%= link_to s.date, animal_sighting_path(@animal, s) %>
+    </li>
+    <% end %>
+  </ul>
+  <% else %>
+    <p>no sightings for this animal yet.</p>
+  <% end %>

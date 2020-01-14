@@ -29,6 +29,16 @@ class AnimalsController < ApplicationController
     render :show
   end
 
+  def search
+    @animal = Animal.find(params[:animal_id])
+    @sightings = Sighting.where("region ilike ?", "%#{params[:search_string]}%")
+    if @sightings.any?
+      render :search
+  else
+    redirect_to animals_path
+  end
+end
+
   def update
     @animal = Animal.find(params[:id])
     if @animal.update(animal_params)
@@ -45,8 +55,8 @@ class AnimalsController < ApplicationController
   end
 
   private
-    def animal_params
-      params.require(:animal).permit(:species)
-    end
+  def animal_params
+    params.require(:animal).permit(:species)
+  end
 
 end
